@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="text-center mb-5">Get in Touch</h1>
+            
+            <!-- Display messages -->
+            {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- Contact Info with Icons -->
+<div class="row mb-5 text-center">
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 h-100">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="fas fa-envelope fa-3x text-primary"></i>
+                </div>
+                <h4>Email</h4>
+                <p>
+                    <a href="mailto:email@popoola.org.ng" class="text-decoration-none">
+                        Write Me
+                    </a>
+                </p>
+                <small class="text-muted">Typically respond within 24 hours</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 h-100">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="fab fa-linkedin fa-3x text-primary"></i>
+                </div>
+                <h4>LinkedIn</h4>
+                <p>
+                    <a href="https://www.linkedin.com/in/oluwaseun-popoola-4a826421/" 
+                       target="_blank" 
+                       class="text-decoration-none">
+                        LinkedIn
+                    </a>
+                </p>
+                <small class="text-muted">Connect for professional networking</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 h-100">
+            <div class="card-body">
+                <div class="mb-3">
+                    <i class="fas fa-comments fa-3x text-primary"></i>
+                </div>
+                <h4>Message</h4>
+                <p>Use the form below</p>
+                <small class="text-muted">For project inquiries or collaborations</small>
+            </div>
+        </div>
+    </div>
+</div>
+            
+            <!-- Contact Form -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="mb-4">Send me a message</h4>
+                    <p class="text-muted mb-4">
+                        Have a question or want to discuss a potential collaboration? 
+                        Send me a message and I'll get back to you as soon as possible.
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+    
+    <div class="d-grid gap-2 mt-4">
+        <button type="submit" class="btn btn-secondary btn-lg">
+            <i class="fas fa-paper-plane me-2"></i> Send Message
+        </button>
+    </div>
+</form>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Response Time Notice -->
+            <div class="alert alert-info mt-4">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Note:</strong> I typically respond within 24-48 hours. 
+                For urgent matters, please mention "URGENT" in your subject line.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

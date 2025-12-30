@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Prosper Popoola{% endblock %}
+
+{% block content %}
+
+<style>
+  /* 1. The container that hides the overflow */
+  .marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 20px 0;
+  }
+
+  /* 2. The flex box that moves */
+  .marquee-track {
+    display: flex;
+    width: max-content; /* Important: allows content to extend beyond screen */
+    animation: scroll 20s linear infinite;
+  }
+
+  /* 3. Pause on hover for better UX */
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  /* 4. Individual card styling */
+  .marquee-item {
+    flex: 0 0 auto;
+    width: 200px; /* Fixed width for consistency */
+    margin: 0 15px;
+  }
+
+  /* 5. The Animation */
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Moves half the total width (the first set) */
+  }
+
+  .profile-img {
+    transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.1);
+}
+</style>
+
+<section class="container py-5">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-12 col-md-4 text-start">
+            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center overflow-hidden shadow-sm" 
+                 style="width: 350px; height: 350px; border: 4px solid white;">
+                <img src="{% static 'me.jpg' %}" 
+                     class="profile-img"
+                     alt="{{ about.name }}" 
+                     style="width: 100%; height: 100%; object-fit: cover;"
+                     loading = "lazy">
+            </div>
+        </div>
+
+        <div class="col-12 col-md-7 text-end">
+            <h1 class="display-4 fw-bold">{{ about.name }}</h1>
+            <p class="lead text-primary fw-semibold">{{ about.title }}</p>
+            <hr class="ms-auto w-25 mb-4" style="border-top: 3px solid var(--bs-primary);">
+            <p class="text-muted fs-5">
+                <h3 class="mb-3"></h3>
+    <p class="lead"> Business Analyst and IT Project Manager leveraging over 15
+         years of extensive experience in Information Technology. 
+         My expertise spans managing network infrastructure, IT Project 
+         Management, ERP software deployment, IT Security, and 
+         Web Application Development </p
+    <p class="lead">{{ about.bio }}</p>
+            </p>
+        </div>
+    </div>
+</section>
+
+            
+            <!-- Skills -->
+            <section class="container-fluid py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Core Skills</h2>
+        <div class="row g-4">
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-dark text-white text-center">Business Analysis</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Requirements Engineering</li>
+                        <li class="list-group-item">BPMN Process Mapping</li>
+                        <li class="list-group-item">Gap & Impact Analysis</li>
+                        <li class="list-group-item">User Story Creation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-dark text-white text-center">ITSM & Service Delivery</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ITIL 4 Methodology</li>
+                        <li class="list-group-item">SLA & KPI Management</li>
+                        <li class="list-group-item">Change Advisory (CAB)</li>
+                        <li class="list-group-item">Service Improvement (SIP)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-dark text-white text-center">IT Ops & DevOps</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Incident Response</li>
+                        <li class="list-group-item">CI/CD Lifecycle</li>
+                        <li class="list-group-item">Cloud Infrastructure</li>
+                        <li class="list-group-item">Disaster Recovery</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<section class="container-fluid py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Tools & Technologies</h2>
+    
+    <div class="marquee-container">
+      <div class="marquee-track">
+        
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Jira</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Confluence</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Visio</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">ServiceNow</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Jira Service Mgmt</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Power BI</h6></div>
+          </div>
+        </div>
+
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Jira</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Confluence</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Visio</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">ServiceNow</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Jira Service Mgmt</h6></div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0">
+            <div class="card-body"><h6 class="card-title mb-0">Power BI</h6></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+              
+           
+            
+            <!-- Education -->
+           
+        <section class="container-fluid py-5 bg-light"> 
+            <div class="container text-center">
+                <h2 class="mb-5">Membership & Certifications</h2>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="0bc014b6-444a-4d49-81b5-2468774af9b5" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="cdf830ac-41ba-4f4c-b74b-a193560372ab" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="b0d9a5b3-6827-4a19-a784-97b04a91c685" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="af009664-eed8-4fea-9f36-c20625d94344" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="91d3851f-49e5-44ec-a132-6f223439699c" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="70381ffe-da7c-46a6-a618-36439a1992c5" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+            </div>
+        </section>
+            <!-- Contact CTA -->
+            <div class="text-center mt-5">
+                <a href="{% url 'contact' %}" class="btn btn-dark btn-lg">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

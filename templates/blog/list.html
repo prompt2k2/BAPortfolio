@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Blog - Prosper Popoola{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Blog Posts Column -->
+        <div class="col-lg-8">
+            <h1 class="mb-4">{% if category %}{{ category.name }}{% else %}Latest Articles{% endif %}</h1>
+            
+            <!-- Category Filter -->
+            <div class="mb-4">
+                <a href="{% url 'post_list' %}" class="btn btn-outline-primary btn-sm {% if not category %}active{% endif %}">
+                    All Categories
+                </a>
+                {% for cat in categories %}
+                <a href="{% url 'post_list_by_category' cat.slug %}" class="btn btn-outline-primary btn-sm {% if category and category.slug == cat.slug %}active{% endif %}">
+                    {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+            
+            <!-- Blog Posts Grid -->
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for post in page_obj %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-white">No Image</span>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-body">
+                            <small class="text-muted">
+                                {{ post.published_date|date:"F d, Y" }} 
+                                {% if post.category %}
+                                • <a href="{% url 'post_list_by_category' post.category.slug %}" class="text-decoration-none">{{ post.category.name }}</a>
+                                {% endif %}
+                            </small>
+                            <h5 class="card-title mt-2">
+                                <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-dark">{{ post.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ post.excerpt|truncatechars:150 }}</p>
+                            
+                            <!-- Tags -->
+                            {% if post.tags %}
+                            <div class="mb-2">
+                                {% for tag in post.tags.split %}
+                                <a href="{% url 'post_list_by_tag' tag %}" class="badge bg-light text-dark text-decoration-none">{{ tag }}</a>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-eye"></i> {{ post.view_count }} views
+                                    {% if post.comments.count > 0 %}
+                                    • <i class="fas fa-comment"></i> {{ post.comments.count }}
+                                    {% endif %}
+                                </small>
+                                <a href="{% url 'post_detail' post.slug %}" class="btn btn-sm btn-outline-primary">Read More →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        No posts found{% if category %} in {{ category.name }}{% endif %}.
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+        
+        <!-- Sidebar Column -->
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 20px;">
+                <!-- Categories Widget -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0"><i class="fas fa-folder"></i> Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="{% url 'post_list' %}" class="text-decoration-none d-flex justify-content-between align-items-center py-1">
+                                All Posts
+                                <span class="badge bg-primary">{{ post_list.count }}</span>
+                            </a></li>
+                            {% for cat in categories %}
+                            <li><a href="{% url 'post_list_by_category' cat.slug %}" class="text-decoration-none d-flex justify-content-between align-items-center py-1">
+                                {{ cat.name }}
+                                <span class="badge bg-secondary">{{ cat.post_set.count }}</span>
+                            </a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Popular Posts Widget -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0"><i class="fas fa-fire"></i> Popular Posts</h5>
+                    </div>
+                    <div class="card-body">
+                        {% with popular_posts=post_list|dictsortreversed:"view_count"|slice:":5" %}
+                            {% for post in popular_posts %}
+                            <div class="mb-3 pb-3 {% if not forloop.last %}border-bottom{% endif %}">
+                                <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none">
+                                    <h6 class="mb-1">{{ post.title|truncatechars:50 }}</h6>
+                                </a>
+                                <small class="text-muted">
+                                    <i class="fas fa-eye"></i> {{ post.view_count }} views • 
+                                    {{ post.published_date|date:"M d, Y" }}
+                                </small>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">No popular posts yet.</p>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                
+                <!-- Tags Widget -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0"><i class="fas fa-tags"></i> Popular Tags</h5>
+                    </div>
+                    <div class="card-body">
+                        {% with all_tags=post_list.all %}
+                            {% if all_tags %}
+                                {% for post in all_tags %}
+                                    {% for tag in post.tags.split|slice:":10" %}
+                                    <a href="{% url 'post_list_by_tag' tag %}" class="badge bg-light text-dark text-decoration-none mb-2">{{ tag }}</a>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                            <p class="text-muted">No tags yet.</p>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
