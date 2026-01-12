@@ -1,227 +1,347 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}Prosper Popoola{% endblock %}
-
-{% block content %}
-
+{% extends 'base.html' %} {% load static %} {% block title %}Prosper Popoola |
+About{% endblock %} {% block content %}
 <style>
-  /* 1. The container that hides the overflow */
+  /* 1. Marquee Enhancements */
   .marquee-container {
     overflow: hidden;
     white-space: nowrap;
     position: relative;
-    padding: 20px 0;
+    padding: 30px 0;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent
+    );
   }
 
-  /* 2. The flex box that moves */
   .marquee-track {
     display: flex;
-    width: max-content; /* Important: allows content to extend beyond screen */
-    animation: scroll 20s linear infinite;
+    width: max-content;
+    animation: scroll 30s linear infinite;
   }
 
-  /* 3. Pause on hover for better UX */
   .marquee-track:hover {
     animation-play-state: paused;
   }
 
-  /* 4. Individual card styling */
   .marquee-item {
     flex: 0 0 auto;
-    width: 200px; /* Fixed width for consistency */
+    width: 180px;
     margin: 0 15px;
   }
 
-  /* 5. The Animation */
   @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Moves half the total width (the first set) */
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
-  .profile-img {
-    transition: transform 0.3s ease;
-}
+  /* 2. Profile Image & Card Glow */
+  .profile-img-container img {
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+  }
 
-.profile-img:hover {
-    transform: scale(1.1);
-}
+  .profile-img-container:hover img {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.5) !important;
+  }
+
+  .skill-card {
+    border-radius: 24px !important;
+    background: var(--primary-glass) !important;
+    border: 1px solid var(--glass-border) !important;
+  }
+
+  .skill-header {
+    background: var(--accent-color) !important;
+    color: white !important;
+    border-radius: 20px 20px 0 0 !important;
+    font-weight: 600;
+    padding: 15px;
+  }
+
+  .cert-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
 </style>
 
 <section class="container py-5">
-    <div class="row align-items-center justify-content-between">
-        <div class="col-12 col-md-4 text-start">
-            <div class="col-md-4 text-center" data-aos="fade-right">
-    <div class="profile-img-container position-relative">
-        <img src="{% static 'me.jpg' %}" class="img-fluid rounded-circle shadow-lg border border-5 border-white" alt="Prosper">
-        <div class="position-absolute bottom-0 end-0 bg-primary text-white p-3 rounded-circle shadow">
-            <i class="fas fa-check"></i>
+  <div class="row align-items-center">
+    <div class="col-lg-5 text-center mb-5 mb-lg-0" data-aos="zoom-in">
+      <div class="profile-img-container position-relative d-inline-block">
+        <img
+          src="{% static 'me.jpg' %}"
+          class="img-fluid rounded-circle shadow-lg border border-5 border-white"
+          alt="Prosper"
+        />
+        <div
+          class="position-absolute bottom-0 end-0 bg-primary text-white rounded-circle shadow-lg d-flex align-items-center justify-content-center"
+          style="width: 60px; height: 60px; border: 4px solid white"
+        >
+          <i class="fas fa-check-circle fa-2x"></i>
         </div>
+      </div>
     </div>
-</div>
-        </div>
 
-        <div class="col-12 col-md-7 text-end">
-            <h1 class="display-4 fw-bold">{{ about.name }}</h1>
-            <p class="lead text-primary fw-semibold">{{ about.title }}</p>
-            <hr class="ms-auto w-25 mb-4" style="border-top: 3px solid var(--bs-primary);">
-            <p class="text-muted fs-5">
-                <h3 class="mb-3"></h3>
-    <p class="lead"> Business Analyst and IT Project Manager leveraging over 15
-         years of extensive experience in Information Technology.
-         My expertise spans managing network infrastructure, IT Project
-         Management, ERP software deployment, IT Security, and
-         Web Application Development </p
-    <p class="lead">{{ about.bio }}</p>
-            </p>
-        </div>
-    </div>
-</section>
-
-
-            <!-- Skills -->
-            <section class="container-fluid py-5">
-    <div class="container">
-        <h2 class="text-center mb-5">Core Skills</h2>
-        <div class="row g-4">
-
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-header bg-dark text-white text-center">Business Analysis</div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Requirements Engineering</li>
-                        <li class="list-group-item">BPMN Process Mapping</li>
-                        <li class="list-group-item">Gap & Impact Analysis</li>
-                        <li class="list-group-item">User Story Creation</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-header bg-dark text-white text-center">ITSM & Service Delivery</div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">ITIL 4 Methodology</li>
-                        <li class="list-group-item">SLA & KPI Management</li>
-                        <li class="list-group-item">Change Advisory (CAB)</li>
-                        <li class="list-group-item">Service Improvement (SIP)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-header bg-dark text-white text-center">IT Ops & DevOps</div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Incident Response</li>
-                        <li class="list-group-item">CI/CD Lifecycle</li>
-                        <li class="list-group-item">Cloud Infrastructure</li>
-                        <li class="list-group-item">Disaster Recovery</li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-
-<section class="container-fluid py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center mb-4">Tools & Technologies</h2>
-
-    <div class="marquee-container">
-      <div class="marquee-track">
-
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Jira</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Confluence</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Visio</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">ServiceNow</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Jira Service Mgmt</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Power BI</h6></div>
-          </div>
-        </div>
-
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Jira</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Confluence</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Visio</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">ServiceNow</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Jira Service Mgmt</h6></div>
-          </div>
-        </div>
-        <div class="marquee-item">
-          <div class="card h-100 text-center shadow-sm border-0">
-            <div class="card-body"><h6 class="card-title mb-0">Power BI</h6></div>
-          </div>
-        </div>
-
+    <div class="col-lg-7 text-center text-lg-start" data-aos="fade-left">
+      <h1 class="display-3 fw-bold mb-2">
+        {{ about.name|default:"Prosper Popoola" }}
+      </h1>
+      <p class="lead text-primary fw-bold fs-4 mb-4">
+        {{ about.title|default:"Business Analyst & IT Project Manager" }}
+      </p>
+      <div class="mb-4 d-flex justify-content-center justify-content-lg-start">
+        <hr
+          style="
+            width: 80px;
+            height: 5px;
+            background: var(--accent-color);
+            opacity: 1;
+            border: none;
+            border-radius: 10px;
+          "
+        />
+      </div>
+      <div class="text-muted fs-5">
+        <p>
+          Business Analyst and IT Project Manager leveraging over 15 years of
+          extensive experience in Information Technology.
+        </p>
+        <p>
+          My expertise spans managing network
+          infrastructure, IT Project Management, ERP software deployment, IT
+          Security, and Web Application Development.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-
-
-            <!-- Education -->
-
-        <section class="container-fluid py-5 bg-light">
-            <div class="container text-center">
-                <h2 class="mb-5">Membership & Certifications</h2>
-                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="0bc014b6-444a-4d49-81b5-2468774af9b5" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="cdf830ac-41ba-4f4c-b74b-a193560372ab" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="b0d9a5b3-6827-4a19-a784-97b04a91c685" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="af009664-eed8-4fea-9f36-c20625d94344" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="91d3851f-49e5-44ec-a132-6f223439699c" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-                <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="70381ffe-da7c-46a6-a618-36439a1992c5" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-            </div>
-        </section>
-            <!-- Contact CTA -->
-            <div class="text-center mt-5">
-                <a href="{% url 'contact' %}" class="btn btn-dark btn-lg">
-                    Get in Touch
-                </a>
-            </div>
-        </div>
+<section class="container py-5">
+  <h2 class="text-center mb-5 fw-bold" data-aos="fade-up">Core Competencies</h2>
+  <div class="row g-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+      <div class="card h-100 skill-card shadow-sm">
+        <div class="skill-header text-center">Business Analysis</div>
+        <ul class="list-group list-group-flush bg-transparent">
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-microscope me-2 text-primary"></i> Requirements
+            Engineering
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-project-diagram me-2 text-primary"></i> BPMN
+            Process Mapping
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-chart-line me-2 text-primary"></i> Gap & Impact
+            Analysis
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-user-edit me-2 text-primary"></i> User Story
+            Creation
+          </li>
+        </ul>
+      </div>
     </div>
-</div>
+
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+      <div class="card h-100 skill-card shadow-sm">
+        <div class="skill-header text-center">ITSM & Service Delivery</div>
+        <ul class="list-group list-group-flush bg-transparent">
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-sync me-2 text-primary"></i> ITIL 4 Methodology
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-tachometer-alt me-2 text-primary"></i> SLA & KPI
+            Management
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-shield-alt me-2 text-primary"></i> Change Advisory
+            (CAB)
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-rocket me-2 text-primary"></i> Service Improvement
+            (SIP)
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+      <div class="card h-100 skill-card shadow-sm">
+        <div class="skill-header text-center">IT Ops & DevOps</div>
+        <ul class="list-group list-group-flush bg-transparent">
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-exclamation-triangle me-2 text-primary"></i>
+            Incident Response
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-infinity me-2 text-primary"></i> CI/CD Lifecycle
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-cloud me-2 text-primary"></i> Cloud Infrastructure
+          </li>
+          <li class="list-group-item bg-transparent border-0">
+            <i class="fas fa-biohazard me-2 text-primary"></i> Disaster Recovery
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container-fluid py-5 bg-white bg-opacity-50">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold">Tools & Technologies</h2>
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Jira</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Confluence</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">ServiceNow</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Power BI</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Visio</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Python</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Jira</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Confluence</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">ServiceNow</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Power BI</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Visio</div>
+          </div>
+        </div>
+        <div class="marquee-item">
+          <div class="card h-100 text-center shadow-sm border-0 py-2">
+            <div class="card-body p-2">Python</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <h2 class="text-center mb-5 fw-bold">Memberships & Certifications</h2>
+  <div class="cert-container" data-aos="fade-up">
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="0bc014b6-444a-4d49-81b5-2468774af9b5"
+      data-share-badge-host="https://www.credly.com"
+    ></div>
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="cdf830ac-41ba-4f4c-b74b-a193560372ab"
+      data-share-badge-host="https://www.credly.com"
+    ></div>
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="b0d9a5b3-6827-4a19-a784-97b04a91c685"
+      data-share-badge-host="https://www.credly.com"
+    ></div>
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="af009664-eed8-4fea-9f36-c20625d94344"
+      data-share-badge-host="https://www.credly.com"
+    ></div>
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="91d3851f-49e5-44ec-a132-6f223439699c"
+      data-share-badge-host="https://www.credly.com"
+    ></div>
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="70381ffe-da7c-46a6-a618-36439a1992c5"
+      data-share-badge-host="https://www.credly.com"
+    ></div>
+  </div>
+</section>
+
+<section class="container py-5 text-center">
+  <div class="card p-5 border-0 shadow-lg skill-card" data-aos="zoom-in">
+    <h2 class="mb-4 fw-bold">Professional Collaboration</h2>
+    <p class="lead mb-4 text-muted">
+      Interested in discussing IT strategy, Business Analysis best practices, or
+      exploring collaborative technical projects?
+    </p>
+    <div>
+      <a
+        href="{% url 'contact' %}"
+        class="btn btn-primary btn-lg px-5 py-3 rounded-pill"
+      >
+        Start a Conversation <i class="fas fa-comments ms-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script
+  type="text/javascript"
+  async
+  src="//cdn.credly.com/assets/utilities/embed.js"
+></script>
+
 {% endblock %}

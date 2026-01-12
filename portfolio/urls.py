@@ -18,13 +18,33 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from django.http import HttpResponse
+from blog.sitemaps import StaticViewSitemap, BlogSitemap # Import your classes
 
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        "Sitemap: https://popoola.org.ng/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+# Define the sitemap dictionary
+sitemaps = {
+    'static': StaticViewSitemap,
+    'blog': BlogSitemap,
+}
 
 urlpatterns = [
     path('be/', admin.site.urls),
     path('', include('home.urls')),          # Home pages
     path('blog/', include('blog.urls')),      # Blog section
     path('ckeditor5/', include('django_ckeditor_5.urls')),
+    
+    path("robots.txt", robots_txt),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
 
 ]
 

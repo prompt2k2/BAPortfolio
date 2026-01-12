@@ -1,11 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Server Error</title>
-</head>
-<body style="text-align: center; padding: 100px; font-family: sans-serif;">
-    <h1>500: Something went wrong</h1>
-    <p>Our servers are having a moment. Please try again later.</p>
-    <a href="/">Try Home</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}System Error | Prosper Popoola{% endblock %}
+
+{% block content %}
+<style>
+    .error-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .gear-icon {
+        font-size: 6rem;
+        color: var(--accent-color);
+        animation: spin 4s linear infinite;
+    }
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+    .error-card {
+        background: rgba(255, 255, 255, 0.8) !important;
+        border-radius: 40px;
+        border: 1px solid #fee2e2;
+    }
+</style>
+
+<div class="container error-container">
+    <div class="error-card p-5 shadow-lg text-center" data-aos="fade-up">
+        <div class="mb-4">
+            <i class="fas fa-cog gear-icon"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-danger mb-3">500: System Exception</h1>
+        <p class="lead text-muted mb-4">
+            Something went wrong during the request execution. <br>
+            Our "Internal IT" (Me) has been notified.
+        </p>
+        <div class="bg-light p-3 rounded mb-4 text-start small border">
+            <code>Status: Internal_Server_Error</code><br>
+            <code>Resolution: Refresh page or try again later.</code>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-dark btn-lg rounded-pill px-5">
+            Try Home Page
+        </a>
+    </div>
+</div>
+{% endblock %}

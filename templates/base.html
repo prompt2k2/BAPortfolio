@@ -1,191 +1,286 @@
-  {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-  {% block meta %}
-<meta name="description" content="Business Analyst and IT Project Manager with 13+ years experience">
-<meta name="keywords" content="Business Analyst, IT Project Manager, ITSD, ITSM">
-<meta name="author" content="Prosper Popoola">
-{% endblock %}
   <head>
     <meta charset="UTF-8" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% block meta %}
+    <meta
+      name="description"
+      content="Business Analyst and IT Project Manager with 13+ years experience"
+    />
+    <meta
+      name="keywords"
+      content="Business Analyst, IT Project Manager, ITSD, ITSM"
+    />
+    <meta name="author" content="Prosper Popoola" />
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
     <title>{% block title %}Prosper Popoola{% endblock %}</title>
 
-    <!-- Bootstrap 5 CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- Custom minimal CSS -->
-/* Custom Modern Styles */
-:root {
-    --primary-glass: rgba(255, 255, 255, 0.7);
-    --accent-color: #6366f1; /* Modern Indigo */
-    --text-main: #1e293b;
-    --glass-border: rgba(255, 255, 255, 0.3);
-}
+    <style>
+      :root {
+        --primary-glass: rgba(255, 255, 255, 0.75);
+        --accent-color: #6366f1;
+        --text-main: #1e293b;
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --footer-bg: #1e293b;
+      }
 
-body {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    background-attachment: fixed;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: var(--text-main);
-    padding-top: 80px;
-}
+      /* 1. Global Styles & Parallax Background */
+      body {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        background-size: 110% 110%; /* Extra size for the parallax movement */
+        background-attachment: fixed;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        color: var(--text-main);
+        padding-top: 85px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+      }
 
-/* Glassmorphism Navbar */
-.navbar {
-    background: var(--primary-glass) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--glass-border);
-    transition: all 0.3s ease;
-}
+      /* 2. Reading Progress Bar */
+      #progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      #progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, var(--accent-color), #a855f7);
+        transition: width 0.1s ease;
+      }
 
-/* Floxy Glass Cards */
-.card, .post-card {
-    background: var(--primary-glass) !important;
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--glass-border) !important;
-    border-radius: 20px !important;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease !important;
-    overflow: hidden;
-}
+      /* 3. Glassmorphism Navbar */
+      .navbar {
+        background: var(--primary-glass) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-bottom: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      }
 
-.card:hover, .post-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
-}
+      .nav-link {
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+      .nav-link:hover {
+        color: var(--accent-color) !important;
+      }
 
-/* Captivating Buttons */
-.btn-primary {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    border: none;
-    border-radius: 12px;
-    padding: 10px 25px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-}
+      /* 4. Floxy Glass Cards */
+      .card,
+      .post-card {
+        background: var(--primary-glass) !important;
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          box-shadow 0.3s ease !important;
+        overflow: hidden;
+      }
+      .card:hover,
+      .post-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+      }
 
-.btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
-}
+      /* 5. Magnetic Buttons */
+      .btn-primary {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 10px 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      }
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+      }
 
-/* Modern Typography for Titles */
-h1, h2, .fw-bold {
-    background: linear-gradient(90deg, #1e293b, #4f46e5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
-}
+      /* 6. Progressive Image Loading */
+      img {
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+      }
+      img.loaded {
+        opacity: 1;
+      }
 
+      /* 7. Typography */
+      h1,
+      h2,
+      .fw-bold {
+        background: linear-gradient(90deg, #1e293b, #4f46e5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      main {
+        flex: 1;
+      }
+      .footer {
+        background: var(--footer-bg);
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .social-icons a:hover {
+        color: var(--accent-color) !important;
+        transform: translateY(-3px);
+      }
+    </style>
     {% block extra_css %}{% endblock %}
   </head>
   <body>
-    <!-- Minimal Navigation -->
-<!-- Minimal Navigation with Icons -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top border-bottom">
-    <div class="container">
-        <a class="navbar-brand d-flex align-item-center" href="{% url 'home' %}">
-            <img src="{% static 'logo.png' %}"
-            alt = "Prosper Popoola logo"
-                     class="d-inline-block align-top"
-                     style="height: 40px; width: auto;"
-                     loading = "lazy">
-            <span class="ms-2 fw-bold text-dark d-none d-sm-inline">Prosper Popoola</span>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="fas fa-home me-1"></i> Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">
-                        <i class="fas fa-user me-1"></i> About
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'post_list' %}">
-                        <i class="fas fa-blog me-1"></i> Blog
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">
-                        <i class="fas fa-envelope me-1"></i> Contact
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div id="progress-container">
+      <div id="progress-bar"></div>
     </div>
-</nav>
 
-    <!-- Main Content -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container">
+        <a
+          class="navbar-brand d-flex align-items-center"
+          href="{% url 'home' %}"
+        >
+          <img src="{% static 'logo.png' %}" alt="Logo" style="height: 40px" />
+          <span class="ms-2 fw-bold d-none d-sm-inline">Prosper Popoola</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}"
+                ><i class="fas fa-home me-1"></i> Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about' %}"
+                ><i class="fas fa-user me-1"></i> About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'post_list' %}"
+                ><i class="fas fa-blog me-1"></i> Blog</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contact' %}"
+                ><i class="fas fa-envelope me-1"></i> Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <main>{% block content %}{% endblock %}</main>
 
-    <!-- Simple Footer -->
-    <footer class="footer py-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <p class="mb-0">&copy; {% now "Y" %} Prosper Popoola</p>
+    <footer class="footer py-5 mt-auto">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">&copy; {% now "Y" %} Prosper Popoola</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+            <div class="social-icons">
+              <a
+                href="https://www.linkedin.com/in/oluwaseun-popoola-4a826421/"
+                class="text-white me-4"
+                target="_blank"
+                ><i class="fab fa-linkedin fa-lg"></i
+              ></a>
+              <a href="mailto:email@popoola.org.ng" class="text-white me-4"
+                ><i class="fas fa-envelope fa-lg"></i
+              ></a>
+              <a
+                href="https://github.com/prompt2k2"
+                class="text-white me-4"
+                target="_blank"
+                ><i class="fab fa-github fa-lg"></i
+              ></a>
+              <a
+                href="https://x.com/Dr3iUndAchtzig"
+                class="text-white"
+                target="_blank"
+                ><i class="fab fa-x-twitter fa-lg"></i
+              ></a>
             </div>
-            <div class="col-md-6 text-md-end">
-                <div class="social-icons">
-                <!-- Social Media Icons -->
-                    <a href="https://www.linkedin.com/in/oluwaseun-popoola-4a826421/"
-                       class="text-white me-3"
-                       target="_blank"
-                       title="LinkedIn Profile"
-                       aria-label="LinkedIn">
-                        <i class="fab fa-linkedin fa-lg"></i>
-                    </a>
-                    <a href="mailto:email@popoola.org.ng"
-                       class="text-white me-3"
-                       title="Send Email"
-                       aria-label="Email">
-                        <i class="fas fa-envelope fa-lg"></i>
-                    </a>
-                    <a href="https://github.com/prompt2k2"
-                       class="text-white me-3"
-                       target="_blank"
-                       title="GitHub Profile"
-                       aria-label="GitHub">
-                        <i class="fab fa-github fa-lg"></i>
-                    </a>
-                    <a href="https://x.com/Dr3iUndAchtzig"
-                       class="text-white"
-                       target="_blank"
-                       title="Twitter Profile"
-                       aria-label="Twitter">
-                        <i class="fab fa-twitter fa-lg"></i>
-                    </a>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-</footer>
+      </div>
+    </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    {% block extra_js %}{% endblock %}
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 1000,
-    once: true,
-  });
-</script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+      // 1. AOS Animations
+      AOS.init({ duration: 1000, once: true, offset: 50 });
+
+      // 2. Lenis Smooth Scroll
+      const lenis = new Lenis();
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // 3. Progress Bar & Parallax Logic
+      window.addEventListener("scroll", () => {
+        // Progress Bar
+        const winScroll = document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progress-bar").style.width = scrolled + "%";
+      });
+
+      // 4. Mouse Parallax
+      document.addEventListener("mousemove", (e) => {
+        const moveX = (e.clientX * -0.05) / 15;
+        const moveY = (e.clientY * -0.05) / 15;
+        document.body.style.backgroundPosition = `${moveX}px ${moveY}px`;
+      });
+
+      // 5. Image Fade-in
+      document.addEventListener("DOMContentLoaded", () => {
+        const images = document.querySelectorAll("img");
+        images.forEach((img) => {
+          if (img.complete) img.classList.add("loaded");
+          else img.onload = () => img.classList.add("loaded");
+        });
+      });
+    </script>
+    {% block extra_js %}{% endblock %}
   </body>
 </html>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_ckeditor_5.fields import CKEditor5Field
+from django.urls import reverse
 
 class Category(models.Model):
     """Simple blog categories"""
@@ -38,6 +39,9 @@ class Post(models.Model):
     
     # Track views
     view_count = models.IntegerField(default=0)
+    
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'slug': self.slug})
     
     def __str__(self):
         return self.title

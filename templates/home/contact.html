@@ -1,107 +1,140 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Connect | Prosper Popoola{% endblock %}
 
 {% block content %}
+<style>
+    /* Glass cards for the contact icons */
+    .contact-card {
+        background: var(--primary-glass) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .contact-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        color: var(--accent-color);
+    }
+    /* Crispy Form Styling */
+    #contact-form-card {
+        border-radius: 30px;
+        border: none;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+    }
+</style>
+
 <div class="container py-5">
     <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <h1 class="text-center mb-5">Get in Touch</h1>
+        <div class="col-lg-10 mx-auto">
             
-            <!-- Display messages -->
+            <div class="text-center mb-5" data-aos="fade-down">
+                <h1 class="display-4 fw-bold">Let's Connect</h1>
+                <p class="lead text-muted">Available for strategic consulting, technical advisory, and professional networking.</p>
+            </div>
+
             {% if messages %}
-            <div class="mb-4">
+            <div class="mb-4" data-aos="fade-in">
                 {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-pill px-4">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
-            
-            <!-- Contact Info with Icons -->
-<div class="row mb-5 text-center">
-    <div class="col-md-4 mb-4">
-        <div class="card border-0 h-100">
-            <div class="card-body">
-                <div class="mb-3">
-                    <i class="fas fa-envelope fa-3x text-primary"></i>
+
+            <div class="row mb-5 g-4 text-center">
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="card contact-card h-100 p-3">
+                        <div class="card-body">
+                            <div class="icon-circle">
+                                <i class="fas fa-envelope fa-2x"></i>
+                            </div>
+                            <h4 class="fw-bold">Email</h4>
+                            <p><a href="mailto:email@popoola.org.ng" class="text-primary text-decoration-none fw-bold">Write Me</a></p>
+                            <small class="text-muted">Inquiries & Proposals</small>
+                        </div>
+                    </div>
                 </div>
-                <h4>Email</h4>
-                <p>
-                    <a href="mailto:email@popoola.org.ng" class="text-decoration-none">
-                        Write Me
-                    </a>
-                </p>
-                <small class="text-muted">Typically respond within 24 hours</small>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4 mb-4">
-        <div class="card border-0 h-100">
-            <div class="card-body">
-                <div class="mb-3">
-                    <i class="fab fa-linkedin fa-3x text-primary"></i>
+
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="card contact-card h-100 p-3">
+                        <div class="card-body">
+                            <div class="icon-circle">
+                                <i class="fab fa-linkedin fa-2x"></i>
+                            </div>
+                            <h4 class="fw-bold">LinkedIn</h4>
+                            <p><a href="https://www.linkedin.com/in/oluwaseun-popoola-4a826421/" target="_blank" class="text-primary text-decoration-none fw-bold">Profile</a></p>
+                            <small class="text-muted">Professional Network</small>
+                        </div>
+                    </div>
                 </div>
-                <h4>LinkedIn</h4>
-                <p>
-                    <a href="https://www.linkedin.com/in/oluwaseun-popoola-4a826421/" 
-                       target="_blank" 
-                       class="text-decoration-none">
-                        LinkedIn
-                    </a>
-                </p>
-                <small class="text-muted">Connect for professional networking</small>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4 mb-4">
-        <div class="card border-0 h-100">
-            <div class="card-body">
-                <div class="mb-3">
-                    <i class="fas fa-comments fa-3x text-primary"></i>
-                </div>
-                <h4>Message</h4>
-                <p>Use the form below</p>
-                <small class="text-muted">For project inquiries or collaborations</small>
-            </div>
-        </div>
-    </div>
-</div>
-            
-            <!-- Contact Form -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4">
-                    <h4 class="mb-4">Send me a message</h4>
-                    <p class="text-muted mb-4">
-                        Have a question or want to discuss a potential collaboration? 
-                        Send me a message and I'll get back to you as soon as possible.
-                    </p>
-                    
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-    
-    <div class="d-grid gap-2 mt-4">
-        <button type="submit" class="btn btn-secondary btn-lg">
-            <i class="fas fa-paper-plane me-2"></i> Send Message
-        </button>
-    </div>
-</form>
-                    </form>
+
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="card contact-card h-100 p-3">
+                        <div class="card-body">
+                            <div class="icon-circle">
+                                <i class="fas fa-map-marker-alt fa-2x"></i>
+                            </div>
+                            <h4 class="fw-bold">Location</h4>
+                            <p class="fw-bold text-dark">Liverpool, UK</p>
+                            <small class="text-muted">Remote Friendly</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Response Time Notice -->
-            <div class="alert alert-info mt-4">
-                <i class="fas fa-info-circle me-2"></i>
-                <strong>Note:</strong> I typically respond within 24-48 hours. 
-                For urgent matters, please mention "URGENT" in your subject line.
+
+            <div class="row g-0 align-items-stretch" data-aos="fade-up">
+                <div class="col-lg-12">
+                    <div class="card id="contact-form-card" class="border-0 shadow-lg" style="border-radius: 25px; overflow: hidden;">
+                        <div class="row g-0">
+                            <div class="col-md-4 bg-primary text-white p-5 d-flex flex-column justify-content-center">
+                                <h3 class="fw-bold mb-4">Briefing Details</h3>
+                                <p class="mb-4 opacity-75">Tell me about your project or inquiry. For consulting requests, please include a brief overview of the timeline.</p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2 small"><i class="fas fa-check-circle me-2"></i> IT Strategy & Analysis</li>
+                                    <li class="mb-2 small"><i class="fas fa-check-circle me-2"></i> Project Governance</li>
+                                    <li class="mb-2 small"><i class="fas fa-check-circle me-2"></i> Process Automation</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-8 p-5 bg-white">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-12 mb-2">
+                                            {{ form|crispy }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill shadow">
+                                            Send Message <i class="fas fa-paper-plane ms-2"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <p class="text-center text-muted mt-5 small">
+                <i class="fas fa-shield-alt me-1"></i> Data Privacy: Your information is only used to respond to your inquiry.
+            </p>
+
         </div>
     </div>
 </div>

@@ -1,8 +1,51 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block title %}Page Not Found | Prosper Popoola{% endblock %}
+
 {% block content %}
-<div class="container text-center" style="padding: 100px 0;">
-    <h1>404: Page Not Found</h1>
-    <p>The page you're looking for has moved or doesn't exist.</p>
-    <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+<style>
+    .error-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .error-card {
+        background: var(--primary-glass) !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 40px;
+        padding: 4rem;
+        text-align: center;
+    }
+    .glitch {
+        font-size: 8rem;
+        font-weight: 900;
+        color: var(--primary-color);
+        position: relative;
+        animation: floating 3s ease-in-out infinite;
+    }
+    @keyframes floating {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+</style>
+
+<div class="container error-container">
+    <div class="error-card shadow-lg" data-aos="zoom-in">
+        <div class="glitch">404</div>
+        <h2 class="fw-bold mb-3">Lost in the Process?</h2>
+        <p class="text-muted mb-5 fs-5">
+            The page you are looking for has been moved, removed, <br>
+            or never existed in the current project scope.
+        </p>
+        <div class="d-flex gap-3 justify-content-center">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg rounded-pill px-5">
+                <i class="fas fa-home me-2"></i> Return Home
+            </a>
+            <a href="{% url 'contact' %}" class="btn btn-outline-primary btn-lg rounded-pill px-5">
+                Report Issue
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

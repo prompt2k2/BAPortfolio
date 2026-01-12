@@ -1,5 +1,11 @@
 from django.urls import path
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import BlogSitemap
+
+sitemaps = {
+    'blog': BlogSitemap,
+}
 
 urlpatterns = [
     path('', views.post_list, name='post_list'),
@@ -7,4 +13,5 @@ urlpatterns = [
     path('tag/<str:tag>/', views.post_list_by_tag, name='post_list_by_tag'),
     path('<slug:slug>/', views.post_detail, name='post_detail'),
     path('<slug:slug>/comment/', views.add_comment, name='add_comment'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
