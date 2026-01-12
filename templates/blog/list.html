@@ -9,19 +9,20 @@
         <!-- Blog Posts Column -->
         <div class="col-lg-8">
             <h1 class="mb-4">{% if category %}{{ category.name }}{% else %}Latest Articles{% endif %}</h1>
-            
+
             <!-- Category Filter -->
             <div class="mb-4">
-                <a href="{% url 'post_list' %}" class="btn btn-outline-primary btn-sm {% if not category %}active{% endif %}">
-                    All Categories
-                </a>
+
+                <a href="{% url 'post_list' %}" class="btn btn-sm rounded-pill px-3 me-2 {% if not category %}btn-primary{% else %}btn-outline-primary{% endif %}">
+    All Stories
+</a>
                 {% for cat in categories %}
                 <a href="{% url 'post_list_by_category' cat.slug %}" class="btn btn-outline-primary btn-sm {% if category and category.slug == cat.slug %}active{% endif %}">
                     {{ cat.name }}
                 </a>
                 {% endfor %}
             </div>
-            
+
             <!-- Blog Posts Grid -->
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 {% for post in page_obj %}
@@ -34,10 +35,10 @@
                             <span class="text-white">No Image</span>
                         </div>
                         {% endif %}
-                        
+
                         <div class="card-body">
                             <small class="text-muted">
-                                {{ post.published_date|date:"F d, Y" }} 
+                                {{ post.published_date|date:"F d, Y" }}
                                 {% if post.category %}
                                 • <a href="{% url 'post_list_by_category' post.category.slug %}" class="text-decoration-none">{{ post.category.name }}</a>
                                 {% endif %}
@@ -46,7 +47,7 @@
                                 <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-dark">{{ post.title }}</a>
                             </h5>
                             <p class="card-text">{{ post.excerpt|truncatechars:150 }}</p>
-                            
+
                             <!-- Tags -->
                             {% if post.tags %}
                             <div class="mb-2">
@@ -55,7 +56,7 @@
                                 {% endfor %}
                             </div>
                             {% endif %}
-                            
+
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <small class="text-muted">
                                     <i class="fas fa-eye"></i> {{ post.view_count }} views
@@ -76,7 +77,7 @@
                 </div>
                 {% endfor %}
             </div>
-            
+
             <!-- Pagination -->
             {% if page_obj.has_other_pages %}
             <nav aria-label="Page navigation" class="mt-5">
@@ -88,7 +89,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    
+
                     {% for num in page_obj.paginator.page_range %}
                         {% if page_obj.number == num %}
                         <li class="page-item active"><span class="page-link">{{ num }}</span></li>
@@ -96,7 +97,7 @@
                         <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
                         {% endif %}
                     {% endfor %}
-                    
+
                     {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
@@ -108,7 +109,7 @@
             </nav>
             {% endif %}
         </div>
-        
+
         <!-- Sidebar Column -->
         <div class="col-lg-4">
             <div class="sticky-top" style="top: 20px;">
@@ -132,7 +133,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <!-- Popular Posts Widget -->
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header bg-dark text-white">
@@ -146,7 +147,7 @@
                                     <h6 class="mb-1">{{ post.title|truncatechars:50 }}</h6>
                                 </a>
                                 <small class="text-muted">
-                                    <i class="fas fa-eye"></i> {{ post.view_count }} views • 
+                                    <i class="fas fa-eye"></i> {{ post.view_count }} views •
                                     {{ post.published_date|date:"M d, Y" }}
                                 </small>
                             </div>
@@ -156,7 +157,7 @@
                         {% endwith %}
                     </div>
                 </div>
-                
+
                 <!-- Tags Widget -->
                 <div class="card shadow-sm">
                     <div class="card-header bg-dark text-white">

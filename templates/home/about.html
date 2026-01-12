@@ -50,14 +50,14 @@
 <section class="container py-5">
     <div class="row align-items-center justify-content-between">
         <div class="col-12 col-md-4 text-start">
-            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center overflow-hidden shadow-sm" 
-                 style="width: 350px; height: 350px; border: 4px solid white;">
-                <img src="{% static 'me.jpg' %}" 
-                     class="profile-img"
-                     alt="{{ about.name }}" 
-                     style="width: 100%; height: 100%; object-fit: cover;"
-                     loading = "lazy">
-            </div>
+            <div class="col-md-4 text-center" data-aos="fade-right">
+    <div class="profile-img-container position-relative">
+        <img src="{% static 'me.jpg' %}" class="img-fluid rounded-circle shadow-lg border border-5 border-white" alt="Prosper">
+        <div class="position-absolute bottom-0 end-0 bg-primary text-white p-3 rounded-circle shadow">
+            <i class="fas fa-check"></i>
+        </div>
+    </div>
+</div>
         </div>
 
         <div class="col-12 col-md-7 text-end">
@@ -67,9 +67,9 @@
             <p class="text-muted fs-5">
                 <h3 class="mb-3"></h3>
     <p class="lead"> Business Analyst and IT Project Manager leveraging over 15
-         years of extensive experience in Information Technology. 
-         My expertise spans managing network infrastructure, IT Project 
-         Management, ERP software deployment, IT Security, and 
+         years of extensive experience in Information Technology.
+         My expertise spans managing network infrastructure, IT Project
+         Management, ERP software deployment, IT Security, and
          Web Application Development </p
     <p class="lead">{{ about.bio }}</p>
             </p>
@@ -77,13 +77,13 @@
     </div>
 </section>
 
-            
+
             <!-- Skills -->
             <section class="container-fluid py-5">
     <div class="container">
         <h2 class="text-center mb-5">Core Skills</h2>
         <div class="row g-4">
-            
+
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-header bg-dark text-white text-center">Business Analysis</div>
@@ -129,10 +129,10 @@
 <section class="container-fluid py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-4">Tools & Technologies</h2>
-    
+
     <div class="marquee-container">
       <div class="marquee-track">
-        
+
         <div class="marquee-item">
           <div class="card h-100 text-center shadow-sm border-0">
             <div class="card-body"><h6 class="card-title mb-0">Jira</h6></div>
@@ -199,12 +199,12 @@
     </div>
   </div>
 </section>
-              
-           
-            
+
+
+
             <!-- Education -->
-           
-        <section class="container-fluid py-5 bg-light"> 
+
+        <section class="container-fluid py-5 bg-light">
             <div class="container text-center">
                 <h2 class="mb-5">Membership & Certifications</h2>
                 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="0bc014b6-444a-4d49-81b5-2468774af9b5" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>

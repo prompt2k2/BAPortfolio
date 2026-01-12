@@ -5,18 +5,18 @@ from .forms import CommentForm
 
 def post_list(request, category_slug=None):
     posts = Post.objects.filter(status='published')
-    
+
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         posts = posts.filter(category=category)
-    
+
     # Pagination (6 posts per page)
     paginator = Paginator(posts, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
+
     categories = Category.objects.all()
-    
+
     context = {
         'page_obj': page_obj,
         'categories': categories,
@@ -26,15 +26,15 @@ def post_list(request, category_slug=None):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, status='published')
-    
+
     # Increment view count
     post.view_count += 1
     post.save(update_fields=['view_count'])
-    
+
     # Handle comments
     comments = post.comments.filter(is_approved=True)
     new_comment = None
-    
+
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -44,13 +44,13 @@ def post_detail(request, slug):
             return redirect('post_detail', slug=post.slug)
     else:
         comment_form = CommentForm()
-    
+
     # Get related posts (same category)
     related_posts = Post.objects.filter(
-        category=post.category, 
+        category=post.category,
         status='published'
     ).exclude(id=post.id)[:3]
-    
+
     context = {
         'post': post,
         'comments': comments,
@@ -60,16 +60,28 @@ def post_detail(request, slug):
     }
     return render(request, 'blog/detail.html', context)
 
+
 def post_list_by_tag(request, tag):
     posts = Post.objects.filter(
         status='published',
         tags__icontains=tag
     )
+
+    paginator = Paginator(posts, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    categories = Category.objects.all()
+
     context = {
-        'posts': posts,
+        'page_obj': page_obj,      # Standard for your pagination
+        'post_list': posts,        # This is what your list.html sidebar likely expects
+        'categories': categories,
         'tag': tag,
+        'category': None,
+        'title': f'Posts tagged with "{tag}"',
     }
-    return render(request, 'blog/post_list_by_tag.html', context)
+    return render(request, 'blog/list.html', context)
 
 def add_comment(request, slug):
     post = get_object_or_404(Post, slug=slug)

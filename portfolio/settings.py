@@ -15,7 +15,6 @@ from django.contrib.messages import constants as messages
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
@@ -23,7 +22,7 @@ MESSAGE_TAGS = {
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -32,11 +31,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #True
+#DEBUG =  os.getenv('DEBUG') == 'True'
+DEBUG= False
 
-ALLOWED_HOSTS = ['popoola.org.ng', 'www.popoola.org.ng']
-
-
+ALLOWED_HOSTS = ['popoola.org.ng', 'www.popoola.org.ng', 'prompt2k2.pythonanywhere.com', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://prompt2k2.pythonanywhere.com', 'https://popoola.org.ng', 'https://www.popoola.org.ng']
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,11 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     #My apps
     'home',
     'blog',
-    
+
     #3rd party apps
     'django_ckeditor_5', #Rich text editor
     'crispy_forms',
@@ -62,23 +63,25 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Email configuration (for development)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # For development
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com' #localhost'
 EMAIL_PORT = 465 #1025  # MailHog port, or use 25 for local
-EMAIL_USE_TLS = True #False
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'Website Correspondence <email@popoola.org.ng' 
+DEFAULT_FROM_EMAIL = 'Website Correspondence <email@popoola.org.ng>'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+'whitenoise.middleware.WhiteNoiseMiddleware',
+'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -110,7 +113,7 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -139,7 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/London'
 
 USE_I18N = True
 
@@ -150,9 +153,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.AppDirectoriesFinder',]
-STATICFILES_DIRS = [BASE_DIR / 'static', ] #development
-STATIC_ROOT = BASE_DIR / 'staticfiles' #production
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') #('staticfiles') #production
 
 #Media files (uploaded files)
 MEDIA_URL = 'media/'
@@ -162,7 +163,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # CKEditor 5 Configuration
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': ['heading', '|', 
+        'toolbar': ['heading', '|',
                     'bold', 'italic', 'link',
                     'bulletedList', 'numberedList',
                     'blockQuote', 'imageUpload', 'undo', 'redo'],
@@ -175,7 +176,7 @@ CKEDITOR_5_CONFIGS = {
             '|',
             'blockQuote',
         ],
-        'toolbar': ['heading', '|', 
+        'toolbar': ['heading', '|',
                    'outdent', 'indent', '|',
                    'bold', 'italic', 'link', 'underline', 'strikethrough',
                    'code', 'subscript', 'superscript', 'highlight', '|',
@@ -242,15 +243,16 @@ CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"  # "staff" or "authenticated"
 CKEDITOR_5_ALLOW_ALL_TAGS = False
 CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpeg', 'jpg', 'png', 'gif', 'bmp', 'webp', 'svg']
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURITY SETTINGS FOR PRODUCTION
 if not DEBUG:
     # 1. Redirect all HTTP traffic to HTTPS
-    SECURE_SSL_REDIRECT = True
-    
+    SECURE_SSL_REDIRECT = False
+
     # 2. Ensure cookies are only sent over HTTPS
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    
+
     # 3. HTTP Strict Transport Security (HSTS)
     # Start with a low value (like 1 hour) to test, then increase to 1 year
     SECURE_HSTS_SECONDS = 3600  # 1 hour

@@ -5,13 +5,17 @@ from django.conf import settings
 from blog.models import Post
 from .forms import ContactForm
 
-def custom_404_view(request, exception):
+
+def error_404(request, exception):
     return render(request, '404.html', status=404)
+
+def error_500(request):
+    return render(request, '500.html', status=500)
 
 def home(request):
     # Get latest blog posts
-    recent_posts = Post.objects.filter(status='published')[:3]
-    
+    latest_posts = Post.objects.filter(status='published').order_by('-published_date')[:3]
+
      # My introduction
     intro = {
         'title': 'Prosper O. Popoola',
@@ -24,10 +28,10 @@ def home(request):
             'Business Process Re-engineering',
         ]
     }
-    
+
     context = {
         'intro': intro,
-        'recent_posts': recent_posts,
+        'latest_posts': latest_posts,
     }
     return render(request, 'home/index.html', context)
 
@@ -45,7 +49,7 @@ def about(request):
             'JIRA, Confluence, Visio',
             'IT Operation, Network Design and Management',
         ],
-       
+
     }
     return render(request, 'home/about.html' , {'summary':professional_summary})
 
@@ -59,19 +63,19 @@ def contact(request):
             email = form.cleaned_data['email']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            
+
             # Format the email
             email_message = f"""
             Name: {name}
             Email: {email}
             Subject: {subject}
-            
+
             Message:
             {message}
             """
-            
+
             # Send email (for now, just print to console)
-            try: 
+            try:
                 send_mail(
                     subject=f'Portfolio Contact: {subject}',
                     message=email_message,
@@ -82,10 +86,10 @@ def contact(request):
                 messages.success(request, 'Your message has been sent successfully! I\'ll get back to you soon.')
                 return redirect('contact')
             except Exception as e:
-                
-                messages.error(request, "There was an error sending your message, try agian later")
-            
+                print(f"Email error:{e}")
+                messages.error(request, "There was an error sending your message, try again later")
+
     else:
         form = ContactForm()
-    
+
     return render(request, 'home/contact.html', {'form': form})

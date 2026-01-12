@@ -14,16 +14,16 @@
                     ← Back to Blog
                 </a>
             </div>
-            
+
             <!-- Post Header -->
             <article>
                 <header class="mb-4">
                     {% if post.featured_image %}
                     <img src="{{ post.featured_image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
                     {% endif %}
-                    
+
                     <h1 class="fw-bold mb-2">{{ post.title }}</h1>
-                    
+
                     <div class="d-flex flex-wrap align-items-center text-muted mb-4">
                         <div class="me-4">
                             <i class="far fa-calendar"></i> {{ post.published_date|date:"F d, Y" }}
@@ -33,7 +33,7 @@
                         </div>
                         {% if post.category %}
                         <div class="me-4">
-                            <i class="far fa-folder"></i> 
+                            <i class="far fa-folder"></i>
                             <a href="{% url 'post_list_by_category' post.category.slug %}" class="text-decoration-none">
                                 {{ post.category.name }}
                             </a>
@@ -45,7 +45,7 @@
                         </div>
                         {% endif %}
                     </div>
-                    
+
                     <!-- Tags -->
                     {% if post.tags %}
                     <div class="mb-4">
@@ -55,12 +55,12 @@
                     </div>
                     {% endif %}
                 </header>
-                
+
                 <!-- Post Content -->
                 <div class="post-content mb-5">
                     {{ post.content|safe }}
                 </div>
-                
+
                 <!-- Share Buttons -->
                 <div class="border-top border-bottom py-4 my-5">
                     <h5 class="mb-3">Share this article:</h5>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </article>
-            
+
             <!-- Related Posts -->
             {% if related_posts %}
             <section class="mt-5 pt-5 border-top">
@@ -106,11 +106,11 @@
                 </div>
             </section>
             {% endif %}
-            
+
             <!-- Comments Section -->
             <section class="mt-5 pt-5 border-top">
                 <h3 class="mb-4">Comments ({{ comments.count }})</h3>
-                
+
                 <!-- Comments List -->
                 {% if comments %}
                 <div class="mb-5">
@@ -119,11 +119,11 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>
-                                    <strong>{{ comment.author_name }}</strong>
+                                    <strong>{{ comment.name }}</strong>
                                     <small class="text-muted ms-2">{{ comment.created_date|date:"F d, Y - h:i A" }}</small>
                                 </div>
                             </div>
-                            <p class="mb-0">{{ comment.content|linebreaks }}</p>
+                            <p class="mb-0">{{ comment.comment|linebreaks }}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -133,7 +133,7 @@
                     No comments yet. Be the first to comment!
                 </div>
                 {% endif %}
-                
+
                 <!-- Add Comment Form -->
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-dark text-white">
@@ -144,25 +144,25 @@
                             {% csrf_token %}
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="{{ comment_form.author_name.id_for_label }}" class="form-label">Name *</label>
-                                    {{ comment_form.author_name }}
-                                    {% if comment_form.author_name.errors %}
-                                    <div class="text-danger">{{ comment_form.author_name.errors }}</div>
+                                    <label for="{{ comment_form.name.id_for_label }}" class="form-label">Name *</label>
+                                    {{ comment_form.name }}
+                                    {% if comment_form.name.errors %}
+                                    <div class="text-danger">{{ comment_form.name.errors }}</div>
                                     {% endif %}
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="{{ comment_form.author_email.id_for_label }}" class="form-label">Email *</label>
-                                    {{ comment_form.author_email }}
-                                    {% if comment_form.author_email.errors %}
-                                    <div class="text-danger">{{ comment_form.author_email.errors }}</div>
+                                    <label for="{{ comment_form.email.id_for_label }}" class="form-label">Email *</label>
+                                    {{ comment_form.email }}
+                                    {% if comment_form.email.errors %}
+                                    <div class="text-danger">{{ comment_form.email.errors }}</div>
                                     {% endif %}
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="{{ comment_form.content.id_for_label }}" class="form-label">Comment *</label>
-                                {{ comment_form.content }}
-                                {% if comment_form.content.errors %}
-                                <div class="text-danger">{{ comment_form.content.errors }}</div>
+                                <label for="{{ comment_form.comment.id_for_label }}" class="form-label">Comment *</label>
+                                {{ comment_form.comment }}
+                                {% if comment_form.comment.errors %}
+                                <div class="text-danger">{{ comment_form.comment.errors }}</div>
                                 {% endif %}
                             </div>
                             <button type="submit" class="btn btn-primary">Post Comment</button>
@@ -171,7 +171,7 @@
                 </div>
             </section>
         </div>
-        
+
         <!-- Sidebar -->
         <div class="col-lg-4">
             <div class="sticky-top" style="top: 20px;">
@@ -185,11 +185,11 @@
                             <img src="{% static 'me.jpg' %}" alt="Prosper Popoola" class="rounded-circle" width="100" height="100">
                         </div>
                         <h5>Prosper Popoola</h5>
-                        <p class="text-muted">Business Analyst and IT Project Manager with 13+ years of experience in Information Technology.</p>
+                        <p class="text-muted">Business Analyst and IT Project Manager with 15+ years of experience in Information Technology.</p>
                         <a href="{% url 'home' %}#contact" class="btn btn-outline-primary btn-sm">Contact Me</a>
                     </div>
                 </div>
-                
+
                 <!-- Table of Contents (if using CKEditor with heading structure) -->
                 {% if post.content %}
                 <div class="card mb-4 shadow-sm">
@@ -203,7 +203,7 @@
                             document.addEventListener('DOMContentLoaded', function() {
                                 const headings = document.querySelectorAll('.post-content h2, .post-content h3');
                                 const toc = document.getElementById('toc');
-                                
+
                                 if (headings.length > 0) {
                                     let tocHTML = '<ul class="list-unstyled">';
                                     headings.forEach((heading, index) => {
@@ -222,7 +222,7 @@
                     </div>
                 </div>
                 {% endif %}
-                
+
                 <!-- Latest Posts -->
                 <div class="card shadow-sm">
                     <div class="card-header bg-dark text-white">

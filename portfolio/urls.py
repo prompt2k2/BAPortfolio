@@ -19,17 +19,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-handler404 = 'home.views.custom_404_view'
-
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('be/', admin.site.urls),
     path('', include('home.urls')),          # Home pages
     path('blog/', include('blog.urls')),      # Blog section
-    path('ckeditor5/', include('django_ckeditor_5.urls')), 
-  
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
+
 ]
 
+# Add these two lines at the bottom (outside urlpatterns)
+handler404 = 'home.views.error_404'
+handler500 = 'home.views.error_500'
 # Serve static/media files during development
 
 # Replace your current if settings.DEBUG block with this:
